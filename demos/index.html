@@ -1,0 +1,27 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta content="text/html; charset=ISO-8859-1" http-equiv="Content-Type" />
+<script src="../geolocation.js"></script>
+<title>Geolocation test</title>
+</head>
+<body>
+
+<script>
+
+function callback(location) {
+	//alert(location.longitude);
+	console.log(location);
+}
+
+geoLocation.call(callback);
+setTimeout(function() {
+	geoLocation.call(callback);
+}, 200);
+setTimeout(function() {
+	geoLocation.call(callback);
+}, 2000);
+</script>
+
+</body>
+</html>
