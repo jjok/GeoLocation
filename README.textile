@@ -1,1 +1,8 @@
 h1. GeoLocation
+
+Gets the user's latitude and longitude and pass it to any assigned callback functions, when available.
+
+h2. Useage
+
+@geoLocation.call(function success_callback [, function failure_callback])@
+

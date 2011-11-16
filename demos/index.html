@@ -1,7 +1,7 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html lang="en-GB">
 <head>
-<meta content="text/html; charset=ISO-8859-1" http-equiv="Content-Type" />
+<meta charset="UTF-8" />
 <script src="../geolocation.js"></script>
 <title>Geolocation test</title>
 </head>
@@ -10,17 +10,18 @@
 <script>
 
 function callback(location) {
-	//alert(location.longitude);
-	console.log(location);
+	//console.log(location);
+	var p = document.createElement('p'),
+		text = document.createTextNode("Location: " + location.latitude + ", " + location.longitude);
+	p.appendChild(text);
+	document.body.appendChild(p);
 }
 
 geoLocation.call(callback);
+
 setTimeout(function() {
 	geoLocation.call(callback);
-}, 200);
-setTimeout(function() {
-	geoLocation.call(callback);
-}, 2000);
+}, 5000);
 </script>
 
 </body>
