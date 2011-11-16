@@ -15,18 +15,20 @@
 		config = {},
 	//Current status
 		status = NOT_INIT,
-	//Stored location
+	//Current location
 		location = {},
-		callback_queue = [],
+		//callback_queue = [],
 		//fallback_queue = [],
-		
+	
 		ready_queue = [],
 		watch_queue = [],
+
 		watch_id;
 	
 	context['geoLocation'] = {
 		/**
-		 * TODO
+		 * Set location options
+		 * @param options {object}
 		 */
 		config: function(options) {
 			//enableHighAccuracy
@@ -55,9 +57,9 @@
 							break;
 						case SUCCESS:
 							callback_success(location);
-							break;
+						/*	break;
 						case FAIL:
-							callback_failure();
+							callback_failure();*/
 					}
 					break;
 				case 'change':
@@ -122,7 +124,7 @@
 	/**
 	 * Store the current location and call any queued callbacks
 	 */
-	function success(loc) {
+	/*function success(loc) {
 		status = SUCCESS;
 		//console.log(loc);
 		store(loc);
@@ -131,7 +133,7 @@
 			callback_queue[i](location);
 		}
 		callback_queue = [];
-	}
+	}*/
 
 	/**
 	 * Call any queued failure callbacks

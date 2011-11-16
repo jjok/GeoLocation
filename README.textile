@@ -4,7 +4,37 @@ Gets the user's latitude and longitude and pass it to any assigned callback func
 
 h2. Useage
 
+Set location options
+
+h3. Set location options
+
+@geoLocation.config(object options)@
+
+Example:
+
+bc.. geoLocation.config({
+	timeout: 5000,
+	enableHighAccuracy: true,
+	maximumAge: 600000
+});
+
+h3. Subscribe to location ready or location change events
+
 @geoLocation.addEvent(string event, function success_callback [, function failure_callback])@
+
+Example:
+
+bc.. geoLocation.addEvent('ready', function(location) {
+	console.log(location);
+});
+
+geoLocation.addEvent('change', function(location) {
+	console.log(location);
+});
+
+h3. Stop watching the user's position.
+
+@geoLocation.stopWatching()@
 
 h2. Changelog
 

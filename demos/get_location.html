@@ -10,7 +10,6 @@
 <script>
 
 function callback1(location) {
-	//console.log(location);
 	while(document.body.firstChild) {
 		document.body.removeChild(document.body.firstChild);
 	}
@@ -30,21 +29,15 @@ function callback2(location) {
 }
 
 geoLocation.config({
-	//timeout: 5000,
-	enableHighAccuracy: true/*,
-	maximumAge: 600000*/
+	timeout: 5000,
+	enableHighAccuracy: true,
+	maximumAge: 600000
 });
 geoLocation.addEvent('ready', callback1);
-geoLocation.addEvent('ready', callback2);
-
-//geoLocation.addEvent('change', callback1);
-//geoLocation.addEvent('change', callback2);
-
-/*geoLocation.call(callback);
 
 setTimeout(function() {
-	geoLocation.call(callback);
-}, 5000);*/
+	geoLocation.addEvent('ready', callback2);
+}, 5000);
 </script>
 
 </body>
