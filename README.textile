@@ -4,5 +4,13 @@ Gets the user's latitude and longitude and pass it to any assigned callback func
 
 h2. Useage
 
-@geoLocation.call(function success_callback [, function failure_callback])@
+@geoLocation.addEvent(string event, function success_callback [, function failure_callback])@
 
+h2. Changelog
+
+* Version 1.20 - TBA
+** Totally rewrote API.
+** Added location watching.
+** Removed all failure callbacks, for now.
+* Version 1.00 - 16/11/2011
+** Initial release

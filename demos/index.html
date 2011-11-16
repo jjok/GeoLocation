@@ -9,19 +9,42 @@
 
 <script>
 
-function callback(location) {
+function callback1(location) {
 	//console.log(location);
+	while(document.body.firstChild) {
+		document.body.removeChild(document.body.firstChild);
+	}
+
 	var p = document.createElement('p'),
 		text = document.createTextNode("Location: " + location.latitude + ", " + location.longitude);
 	p.appendChild(text);
 	document.body.appendChild(p);
 }
 
-geoLocation.call(callback);
+function callback2(location) {
+
+	var date = document.createElement('p'),
+		date_text = document.createTextNode(new Date(location.timestamp).toString());
+	date.appendChild(date_text);
+	document.body.appendChild(date);
+}
+
+geoLocation.config({
+	//timeout: 5000,
+	enableHighAccuracy: true/*,
+	maximumAge: 600000*/
+});
+geoLocation.addEvent('ready', callback1);
+geoLocation.addEvent('ready', callback2);
+
+//geoLocation.addEvent('change', callback1);
+//geoLocation.addEvent('change', callback2);
+
+/*geoLocation.call(callback);
 
 setTimeout(function() {
 	geoLocation.call(callback);
-}, 5000);
+}, 5000);*/
 </script>
 
 </body>
