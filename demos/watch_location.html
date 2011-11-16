@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8" />
+<script src="../geolocation.js"></script>
+<title>Watch Location test</title>
+</head>
+<body>
+
+<script>
+
+function callback(location) {
+	while(document.body.firstChild) {
+		document.body.removeChild(document.body.firstChild);
+	}
+
+	var p = document.createElement('p'),
+		text = document.createTextNode("Location: " + location.latitude + ", " + location.longitude),
+		date = document.createElement('p'),
+		date_text = document.createTextNode(new Date(location.timestamp).toString());
+	p.appendChild(text);
+	date.appendChild(date_text);
+	document.body.appendChild(p);
+	document.body.appendChild(date);
+}
+
+geoLocation.addEvent('change', callback);
+
+</script>
+
+</body>
+</html>

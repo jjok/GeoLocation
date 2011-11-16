@@ -17,128 +17,89 @@
 		status = NOT_INIT,
 	//Current location
 		location = {},
-		//callback_queue = [],
+
 		//fallback_queue = [],
-	
 		ready_queue = [],
 		watch_queue = [],
 
 		watch_id;
-	
+
+	//Add public methods
 	context['geoLocation'] = {
 		/**
 		 * Set location options
+		 * @visibility public
 		 * @param options {object}
 		 */
 		config: function(options) {
-			//enableHighAccuracy
-			//maximumAge
-			//timeout
 			for(var i in options) {
 				config[i] = options[i];
 			}
 		},
 		/**
 		 * 
+		 * @visibility public
 		 * @param event {string}
 		 * @param callback_success {fn}
 		 * @param callback_failure {fn}
 		 */
 		addEvent: function(event, callback_success/*, callback_failure*/) {
-			switch(event) {
-				case 'ready':
-					switch(status) {
-						case NOT_INIT:
-							ready_queue.push(callback_success);
-							initialise();
-							break;
-						case INITIALISING:
-							ready_queue.push(callback_success);
-							break;
-						case SUCCESS:
-							callback_success(location);
-						/*	break;
-						case FAIL:
-							callback_failure();*/
-					}
-					break;
-				case 'change':
-					watch_queue.push(callback_success);
-					if(typeof watch_id == 'undefined') {
-						startWatching();
-					}
+			try {
+				switch(event) {
+					case 'ready':
+						switch(status) {
+							case NOT_INIT:
+								ready_queue.push(callback_success);
+								getLocation();
+								break;
+							case INITIALISING:
+								ready_queue.push(callback_success);
+								break;
+							case SUCCESS:
+								callback_success(location);
+							/*	break;
+							case FAIL:
+								callback_failure();*/
+						}
+						break;
+					case 'change':
+						watch_queue.push(callback_success);
+						if(typeof watch_id == 'undefined' && status != FAIL) {
+							startWatching();
+						}
+				}
 			}
+			catch(e) {
+				//console.log(e.message);
+				error(e);
+			}
+
 		},
+		/**
+		 * Stop watching the user's location
+		 * @visibility public
+		 */
 		stopWatching: function() {
 			navigator.geolocation.clearWatch(watch_id);
 			watch_queue = [];
-			//console.log('stopped watching');
-		},
-		/**
-		 * 
-		 * @param callback_success {fn} Called if location is available
-		 * @param callback_failure {fn} Called if location is not available (optional)
-		 */
-		/*call: function(callback_success, callback_failure) {
-			//Create a default failure callback
-//			if(typeof callback_failure == 'undefined') {
-//				var callback_failure = function() {
-//					//alert('fail');
-//				};
-//			}
-
-			switch(status) {
-				case NOT_INIT:
-					//callback_queue.push(callback_success);
-					//fallback_queue.push(callback_failure);
-					initialise();
-					//break;
-				case INITIALISING:
-					callback_queue.push(callback_success);
-					//fallback_queue.push(callback_failure);
-					break;
-				case SUCCESS:
-					callback_success(location);
-					break;
-				case FAIL:
-					callback_failure();
-			}
-		}*/
+		}
 	};
 
 	/**
 	 * Try to get the user's current location
+	 * @visibility private
 	 */
-	function initialise() {
+	function getLocation() {
 		status = INITIALISING;
-		//console.log('init');
-		try {
-			navigator.geolocation.getCurrentPosition(ready, error);
-		}
-		catch(e) {
-			//alert('exception');
-			error(e.message);
-		}
+		navigator.geolocation.getCurrentPosition(ready, error, config);
 	}
 
 	/**
-	 * Store the current location and call any queued callbacks
-	 */
-	/*function success(loc) {
-		status = SUCCESS;
-		//console.log(loc);
-		store(loc);
-
-		for(var i in callback_queue) {
-			callback_queue[i](location);
-		}
-		callback_queue = [];
-	}*/
-
-	/**
 	 * Call any queued failure callbacks
+	 * @visibility private
 	 */
 	function error(e) {
+		//console.log('error');
 		console.log(e);
 		status = FAIL;
 		//fallback();
@@ -150,6 +111,7 @@
 
 	/**
 	 * 
+	 * @visibility private
 	 */
 	function ready(loc) {
 		status = SUCCESS;
@@ -162,19 +124,21 @@
 	}
 
 	/**
-	 * 
+	 * Start watching the user's location
+	 * @visibility private
 	 */
 	function startWatching() {
-		try {
+		//try {
 			watch_id = navigator.geolocation.watchPosition(change, error, config);
-		}
-		catch(e) {
-			error(e.message);
-		}
+		//}
+		//catch(e) {
+			//error(e.message);
+		//}
 	}
 
 	/**
 	 * Called when a watched location changes
+	 * @visibility private
 	 */
 	function change(loc) {
 		if(store(loc)) {
@@ -186,6 +150,7 @@
 
 	/**
 	 * 
+	 * @visibility private
 	 * @return boolean
 	 */
 	function store(loc) {
@@ -198,6 +163,4 @@
 		}
 		return false;
 	}
-
-	//console.log(this.geoLocation);
 }(this);

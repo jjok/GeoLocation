@@ -4,11 +4,9 @@ Gets the user's latitude and longitude and pass it to any assigned callback func
 
 h2. Useage
 
-Set location options
-
 h3. Set location options
 
-@geoLocation.config(object options)@
+bc. geoLocation.config(object options)
 
 Example:
 
@@ -20,7 +18,7 @@ bc.. geoLocation.config({
 
 h3. Subscribe to location ready or location change events
 
-@geoLocation.addEvent(string event, function success_callback [, function failure_callback])@
+bc. geoLocation.addEvent(string event, function success_callback [, function failure_callback])
 
 Example:
 
@@ -34,7 +32,7 @@ geoLocation.addEvent('change', function(location) {
 
 h3. Stop watching the user's position.
 
-@geoLocation.stopWatching()@
+bc. geoLocation.stopWatching()
 
 h2. Changelog
 
