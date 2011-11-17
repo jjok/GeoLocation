@@ -3,13 +3,13 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
-<script src="http://maps.googleapis.com/maps/api/js?sensor=true"></script>
+<script src="http://maps.googleapis.com/maps/api/js?v=3.6&sensor=true"></script>
 <script src="../geolocation.js"></script>
 
 <style>
-  html { height: 100% }
-  body { height: 100%; margin: 0; padding: 0 }
-  #map { width:100%; height:100% }
+	html { height: 100% }
+	body { height: 100%; margin: 0; padding: 0 }
+	#map { width:100%; height:100% }
 </style>
 
 </head>
@@ -31,7 +31,7 @@
 				map: map
 			});
 
-			var position = new google.maps.LatLng(location.latitude, location.longitude);
+			centerMap(location);
 		}
 
 		function centerMap(location) {
