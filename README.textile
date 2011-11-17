@@ -8,6 +8,13 @@ h3. Set location options
 
 bc. geoLocation.config(object options)
 
+Options:
+* timeout {Integer} - The maximum amount out time, in milliseconds, the application will spend trying to get the location.
+* enableHighAccuracy {Boolean} - Get the most accurate location possible. Defaults to @false@.
+* maximumAge {Integer} - Indicates that a cached location is acceptable, but only if it is less old than the number of milliseconds specified.
+
+See "http://www.w3.org/TR/2010/CR-geolocation-API-20100907/#position_options_interface":http://www.w3.org/TR/2010/CR-geolocation-API-20100907/#position_options_interface for more information on these options.
+
 Example:
 
 bc.. geoLocation.config({
@@ -18,38 +25,27 @@ bc.. geoLocation.config({
 
 h3. Subscribe to location ready or location change events
 
-bc. //geoLocation.addEvent(string event, function success_callback [, function failure_callback])
-
 bc. geoLocation.get(object options)
 
 Options:
 * ready {Function} - A callback function to be executed when location information is made available. If location is already available, will be executed immediately.
-* change {Function} - A callback function to be executed each time the location is updated.
+* change {Function} - A callback function to be executed each time the location is updated. If both 'ready' and 'change' callbacks are passed, 'ready' will be called is first time the location is available. If 'ready' is not passed, 'change' will be called the first time the location is available.
 * error {Function} - A callback function to be executed if location information is not available.
 
 Example:
 
-bc.. Log the user's location, if available
-/*geoLocation.addEvent('ready', function(location) {
-	console.log(location);
-});*/
+bc.. //Log the user's location, if available
 geoLocation.get({
 	ready: function(location) {
 		console.log(location);
 	}
 });
 
-//Log the location every time it changes
-/*geoLocation.addEvent('change', function(location) {
-	console.log(location);
-});*/
-
+//Log the location when it is first available, and every time it changes
 geoLocation.get({
-	//Ready is called when location information is first available
 	ready: function(location) {
 		console.log(location);
 	},
-	//Change is called each time the location changes from the original value
 	change: function(location) {
 		console.log(location);
 	}
@@ -58,6 +54,8 @@ geoLocation.get({
 h3. Stop watching the user's position.
 
 bc. geoLocation.stopWatching()
+
+If the 'change' option was passed to geoLocation.get(), the location of the user will be being watched. Call this method to stop watching the location, and stop any 'change' callback functions from being executed.
 
 h2. Changelog
 

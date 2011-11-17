@@ -36,14 +36,13 @@
 		enableHighAccuracy: true,
 		maximumAge: 600000
 	});
-	//geoLocation.addEvent('ready', callback1);
+
 	geoLocation.get({
 		ready: callback1,
 		error: error
 	});
 	
 	setTimeout(function() {
-		//geoLocation.addEvent('ready', callback2);
 		geoLocation.get({
 			ready: callback2,
 			error: error
