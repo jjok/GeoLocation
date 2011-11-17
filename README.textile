@@ -18,16 +18,41 @@ bc.. geoLocation.config({
 
 h3. Subscribe to location ready or location change events
 
-bc. geoLocation.addEvent(string event, function success_callback [, function failure_callback])
+bc. //geoLocation.addEvent(string event, function success_callback [, function failure_callback])
+
+bc. geoLocation.get(object options)
+
+Options:
+* ready {Function} - A callback function to be executed when location information is made available. If location is already available, will be executed immediately.
+* change {Function} - A callback function to be executed each time the location is updated.
+* error {Function} - A callback function to be executed if location information is not available.
 
 Example:
 
-bc.. geoLocation.addEvent('ready', function(location) {
+bc.. Log the user's location, if available
+/*geoLocation.addEvent('ready', function(location) {
 	console.log(location);
+});*/
+geoLocation.get({
+	ready: function(location) {
+		console.log(location);
+	}
 });
 
-geoLocation.addEvent('change', function(location) {
+//Log the location every time it changes
+/*geoLocation.addEvent('change', function(location) {
 	console.log(location);
+});*/
+
+geoLocation.get({
+	//Ready is called when location information is first available
+	ready: function(location) {
+		console.log(location);
+	},
+	//Change is called each time the location changes from the original value
+	change: function(location) {
+		console.log(location);
+	}
 });
 
 h3. Stop watching the user's position.
@@ -36,7 +61,7 @@ bc. geoLocation.stopWatching()
 
 h2. Changelog
 
-* Version 1.20 - TBA
+* Version 1.50 - TBA
 ** Totally rewrote API.
 ** Added location watching.
 ** Removed all failure callbacks, for now.
