@@ -18,12 +18,11 @@
 		status = NOT_INIT,
 	//Current location
 		location = {},
-
-		//fallback_queue = [],
+	//Queued functions
 		ready_queue = [],
 		watch_queue = [],
 		error_queue = [],
-
+	//
 		watch_id = null;
 
 	//Add public methods
@@ -77,62 +76,6 @@
 			}
 		},*/
 
-
-		/*get: function(params) {
-			switch(status) {
-				case NOT_INIT:
-					getLocation();
-				case INITIALISING:
-					if(params.ready) {
-						ready_queue.push(params.ready);
-					}
-					if(params.error) {
-						error_queue.push(params.error);
-					}
-					break;
-				case SUCCESS:
-					if(params.ready) {
-						params.ready(location);
-					}
-					break;
-				case FAIL:
-					if(params.error) {
-						params.error();
-					}
-			}
-		},
-		
-		watch: function(params) {
-
-			switch(status) {
-				case NOT_INIT:
-					startWatching();
-				case INITIALISING:
-					if(params.ready) {
-						ready_queue.push(params.ready);
-					}
-					if(params.change) {
-						watch_queue.push(params.change);
-					}
-					if(params.error) {
-						error_queue.push(params.error);
-					}
-					break;
-				case SUCCESS:
-					if(params.ready) {
-						params.ready(location);
-					}
-					if(params.change) {
-						watch_queue.push(params.change);
-					}
-					break;
-				case FAIL:
-					if(params.error) {
-						params.error();
-					}
-			}
-		},*/
-		
 		get: function(params) {
 			try {
 				switch(status) {
