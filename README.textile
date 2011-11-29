@@ -59,7 +59,7 @@ If the 'change' option was passed to geoLocation.get(), the location of the user
 
 h2. Changelog
 
-* Version 1.50 - TBA (not compatable with previous version)
+* Version 1.50 - 21/11/2011 (not compatable with previous version)
 ** Totally rewrote API.
 ** Added location watching.
 * Version 1.00 - 16/11/2011

@@ -19,10 +19,11 @@
 	//Current location
 		location = {},
 
+	//Queued functions
 		ready_queue = [],
 		watch_queue = [],
 		error_queue = [],
-
+	//
 		watch_id/* = null*/;
 
 	//Add public methods
