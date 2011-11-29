@@ -19,12 +19,11 @@
 	//Current location
 		location = {},
 
-		//fallback_queue = [],
 		ready_queue = [],
 		watch_queue = [],
 		error_queue = [],
 
-		watch_id = null;
+		watch_id/* = null*/;
 
 	//Add public methods
 	context['geoLocation'] = {
@@ -77,69 +76,21 @@
 			}
 		},*/
 
-
-		/*get: function(params) {
-			switch(status) {
-				case NOT_INIT:
-					getLocation();
-				case INITIALISING:
-					if(params.ready) {
-						ready_queue.push(params.ready);
-					}
-					if(params.error) {
-						error_queue.push(params.error);
-					}
-					break;
-				case SUCCESS:
-					if(params.ready) {
-						params.ready(location);
-					}
-					break;
-				case FAIL:
-					if(params.error) {
-						params.error();
-					}
-			}
-		},
-		
-		watch: function(params) {
-
-			switch(status) {
-				case NOT_INIT:
-					startWatching();
-				case INITIALISING:
-					if(params.ready) {
-						ready_queue.push(params.ready);
-					}
-					if(params.change) {
-						watch_queue.push(params.change);
-					}
-					if(params.error) {
-						error_queue.push(params.error);
-					}
-					break;
-				case SUCCESS:
-					if(params.ready) {
-						params.ready(location);
-					}
-					if(params.change) {
-						watch_queue.push(params.change);
-					}
-					break;
-				case FAIL:
-					if(params.error) {
-						params.error();
-					}
-			}
-		},*/
-		
+		/**
+		 * Get location or, if 'change' is passed, start watching location
+		 * @visibility public
+		 * @param params {object}
+		 */
 		get: function(params) {
 			try {
 				switch(status) {
 					case NOT_INIT:
+						//Start watching if 'change' option is passed
+						//TODO change all these checks to if(typeof blah == "function") ?
 						if(params.change) {
 							startWatching();
 						}
+						//Get location once
 						else {
 							getLocation();
 						}
@@ -180,7 +131,7 @@
 		stopWatching: function() {
 			navigator.geolocation.clearWatch(watch_id);
 			watch_queue = [];
-			watch_id = null;
+			//watch_id = null;
 		}
 	};
 
