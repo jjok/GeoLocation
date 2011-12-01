@@ -17,16 +17,17 @@
 	<div id="map"></div>
 	<script>
 		var map,
-			marker,
-			//route = [],
-			options = {
-			zoom: 16,
-		    disableDefaultUI: true,
-			mapTypeId: google.maps.MapTypeId.ROADMAP
-		};
+			el = document.getElementById("map"),
+			marker;
+			//route = [];
 
 		function buildMap(location) {
-			map = new google.maps.Map(document.getElementById("map"), options);
+			var options = {
+				zoom: 16,
+			    disableDefaultUI: true,
+				mapTypeId: google.maps.MapTypeId.ROADMAP
+			};
+			map = new google.maps.Map(el, options);
 			marker = new google.maps.Marker({
 				map: map
 			});
@@ -35,7 +36,7 @@
 		}
 
 		function centerMap(location) {
-			console.log('Centering map.');
+			//console.log('Centering map.');
 			var position = new google.maps.LatLng(location.latitude, location.longitude);
 			marker.setPosition(position);
 			map.setCenter(position);
@@ -45,9 +46,7 @@
 			ready: buildMap,
 			change: centerMap,
 			error: function(e) {
-				alert('argh!');
-				console.log(e.message);
-				console.log('Unable to watch location.');
+				el.innerHTML = e.message;
 			}
 		});
 	</script>

@@ -3,7 +3,7 @@
  * copyright 2011 Jonathan Jefferies
  * https://github.com/jjok/GeoLocation
  * MIT License
- * v1.50
+ * v1.51
  */
 !function(context) {
 	//Statuses
@@ -24,9 +24,9 @@
 		watch_queue = [],
 		error_queue = [],
 	//
-		watch_id/* = null*/;
+		watch_id;
 
-	//Add public methods
+	//Public methods
 	context['geoLocation'] = {
 		/**
 		 * Set location options
@@ -38,44 +38,6 @@
 				config[i] = options[i];
 			}
 		},
-		/**
-		 * 
-		 * @visibility public
-		 * @param event {string}
-		 * @param callback_success {fn}
-		 * @param callback_failure {fn}
-		 */
-		/*addEvent: function(event, callback_success) {
-			try {
-				switch(event) {
-					case 'ready':
-						switch(status) {
-							case NOT_INIT:
-								ready_queue.push(callback_success);
-								getLocation();
-								break;
-							case INITIALISING:
-								ready_queue.push(callback_success);
-								break;
-							case SUCCESS:
-								callback_success(location);
-//								break;
-//							case FAIL:
-//								callback_failure();
-						}
-						break;
-					case 'change':
-						watch_queue.push(callback_success);
-						if(watch_id == null && status != FAIL) {
-							startWatching();
-						}
-				}
-			}
-			catch(e) {
-				//console.log(e.message);
-				error(e);
-			}
-		},*/
 
 		/**
 		 * Get location or, if 'change' is passed, start watching location
@@ -86,16 +48,8 @@
 			try {
 				switch(status) {
 					case NOT_INIT:
-						//Start watching if 'change' option is passed
-						//TODO change all these checks to if(typeof blah == "function") ?
-						if(params.change) {
-							startWatching();
-						}
-						//Get location once
-						else {
-							getLocation();
-						}
 					case INITIALISING:
+						//Queue up callback functions
 						if(params.ready) {
 							ready_queue.push(params.ready);
 						}
@@ -105,7 +59,29 @@
 						if(params.error) {
 							error_queue.push(params.error);
 						}
+
+						if(status == NOT_INIT) {
+							//Start watching if 'change' option is passed
+							if(params.change) {
+								startWatching();
+							}
+							//Get location once
+							else {
+								getLocation();
+							}
+						}
 						break;
+					/*case INITIALISING:
+						if(params.ready) {
+							ready_queue.push(params.ready);
+						}
+						if(params.change) {
+							watch_queue.push(params.change);
+						}
+						if(params.error) {
+							error_queue.push(params.error);
+						}
+						break;*/
 					case SUCCESS:
 						if(params.ready) {
 							params.ready(location);
@@ -132,7 +108,6 @@
 		stopWatching: function() {
 			navigator.geolocation.clearWatch(watch_id);
 			watch_queue = [];
-			//watch_id = null;
 		}
 	};
 
@@ -151,9 +126,9 @@
 	 * @visibility private
 	 */
 	function error(e) {
-		//console.log('error');
-		//alert(typeof e);
-		/*if(typeof e == 'object') {
+		/*console.log('error');
+		alert(typeof e);
+		if(typeof e == 'object') {
 			alert(e.message);
 		}
 		else alert(e);
@@ -168,7 +143,7 @@
 	}
 
 	/**
-	 * 
+	 * Location is first ready
 	 * @visibility private
 	 */
 	function ready(loc) {

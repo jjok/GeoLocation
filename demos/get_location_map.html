@@ -17,13 +17,15 @@
 	<div id="map"></div>
 	<script>
 
+		var el = document.getElementById("map");
+
 		function buildMap(location) {
 			var options = {
 				zoom: 14,
 				disableDefaultUI: true,
 				mapTypeId: google.maps.MapTypeId.ROADMAP
 			},
-				map = new google.maps.Map(document.getElementById("map"), options),
+				map = new google.maps.Map(el, options),
 				position = new google.maps.LatLng(location.latitude, location.longitude);
 			new google.maps.Marker({
 				position: position,
@@ -35,9 +37,7 @@
 		geoLocation.get({
 			ready: buildMap,
 			error: function(e) {
-				//alert('argh!');
-				console.log(e);
-				console.log('Unable to watch location.');
+				el.innerHTML = e.message;
 			}
 		});
 	</script>
