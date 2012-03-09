@@ -28,7 +28,21 @@
 	}
 
 	function error(e) {
-		alert('Error');
+		if(e.code) {
+			switch(e.code) {
+				case e.PERMISSION_DENIED:
+					alert('Permisssion denied!');
+					break;
+				case e.POSITION_UNAVAILABLE:
+					alert('Position unavailable!');
+					break;
+				case e.TIMEOUT:
+					alert('Timeout!');
+			}
+		}
+		else {
+			alert(e.message);
+		}
 	}
 
 	geoLocation.config({

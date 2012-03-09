@@ -37,7 +37,23 @@
 		geoLocation.get({
 			ready: buildMap,
 			error: function(e) {
-				el.innerHTML = e.message;
+				var message;
+				if(e.code) {
+					switch(e.code) {
+						case e.PERMISSION_DENIED:
+							message = 'Permisssion denied.';
+							break;
+						case e.POSITION_UNAVAILABLE:
+							message = 'Position unavailable.';
+							break;
+						case e.TIMEOUT:
+							message = 'Timeout.';
+					}
+				}
+				else {
+					message = e.message;
+				}
+				el.innerHTML = message;
 			}
 		});
 	</script>
